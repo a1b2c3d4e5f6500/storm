@@ -20,9 +20,11 @@ function startGame(name) {
   currentGame = name;
   title.textContent = name;
   modal.hidden = false;
-  modal.classList.add('is-fullscreen');
-  document.body.classList.add('game-is-fullscreen');
-  enterFullscreen();
+  if (isPhone()) {
+    modal.classList.add('is-fullscreen');
+    document.body.classList.add('game-is-fullscreen');
+    enterFullscreen();
+  }
   cancelLoops();
   if (name === 'Snake') setupSnake();
   if (name === 'Block Runner') setupRunner();
@@ -31,7 +33,9 @@ function startGame(name) {
   if (name === 'Orbit Catch') setupOrbit();
 }
 function restartGame() { startGame(currentGame); }
+function isPhone() { return window.matchMedia('(max-width: 600px)').matches || navigator.maxTouchPoints > 0; }
 function enterFullscreen() {
+  if (!isPhone()) return;
   const target = document.documentElement;
   const request = target.requestFullscreen || target.webkitRequestFullscreen;
   if (request) Promise.resolve(request.call(target)).catch(() => {});
