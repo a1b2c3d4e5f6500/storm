@@ -34,6 +34,10 @@ const onlineGames = [
   ['Action Games Hub', 'Find flere gratis action-spil online.', 'action'], ['Puzzle Games Hub', 'Find flere gratis puzzle-spil online.', 'puzzle'], ['Racing Games Hub', 'Find flere gratis racerspil online.', 'racing'], ['Strategy Games Hub', 'Find flere gratis strategispil online.', 'strategy'], ['Adventure Games Hub', 'Find flere gratis eventyrspil online.', 'adventure']
 ];
 
+const gameLinks = {
+  '2048': 'https://play2048.co/', 'Tetris': 'https://tetris.com/play-tetris', 'Minesweeper': 'https://minesweeperonline.com/', 'Solitaire': 'https://solitaired.com/', 'Chess': 'https://lichess.org/', 'Checkers': 'https://www.playok.com/en/checkers/', 'Sudoku': 'https://sudoku.com/', 'Mahjong': 'https://www.247mahjong.com/', 'Flappy Bird': 'https://flappybird.io/', 'Doodle Jump': 'https://doodlejump.io/', 'Pac-Man': 'https://pacman.platzh1rsch.ch/', 'Asteroids': 'https://asteroids.ee/', 'Pong': 'https://ponggame.org/', 'Breakout': 'https://breakoutgame.net/', 'Frogger': 'https://froggerclassic.net/', 'Space Invaders': 'https://spaceinvaders.io/', 'Sonic Runner': 'https://www.sonicgames.com/', 'Endless Runner': 'https://www.coolmathgames.com/0-run-3', 'Tower Defense': 'https://www.kingdomrush.com/', 'Bloons': 'https://ninjakiwi.com/Games', 'Cut the Rope': 'https://cuttherope.net/', 'Fireboy and Watergirl': 'https://fireboywatergirl.io/', 'Action Turnip': 'https://poki.com/en/g/action-turnip', 'Little Alchemy': 'https://littlealchemy.com/', 'Cookie Clicker': 'https://orteil.dashnet.org/cookieclicker/', 'A Dark Room': 'https://adarkroom.doublespeakgames.com/', 'Hextris': 'https://hextris.io/', 'Krunker': 'https://krunker.io/', 'Shell Shockers': 'https://shellshock.io/', 'Surviv.io': 'https://surviv.io/', 'Slither.io': 'https://slither.io/', 'Agar.io': 'https://agar.io/', 'Paper.io': 'https://paper-io.com/', 'Hole.io': 'https://hole-io.com/', 'Drift Hunters': 'https://drift-hunters.co/', 'Moto X3M': 'https://moto-x3m.com/', 'Fireboy and Watergirl 2': 'https://fireboywatergirl.io/fireboy-and-watergirl-2/', 'Worlds Hardest Game': 'https://worldshardestgame.com/', 'Geometry Dash': 'https://geometrydash.io/', 'Vex 6': 'https://vex6.io/', 'Action Games Hub': 'https://poki.com/en/action', 'Puzzle Games Hub': 'https://poki.com/en/puzzle', 'Racing Games Hub': 'https://poki.com/en/racing', 'Strategy Games Hub': 'https://poki.com/en/strategy', 'Adventure Games Hub': 'https://poki.com/en/adventure'
+};
+
 populateOnlineGames();
 gameSearch.addEventListener('input', filterGames);
 
@@ -42,7 +46,7 @@ function populateOnlineGames() {
     const card = document.createElement('article');
     card.className = 'card online-card';
     card.dataset.search = `${name} ${description} ${category}`.toLowerCase();
-    card.innerHTML = `<div class="card-top"><span class="icon online-icon">↗</span><span class="game-number">${String(index + 6).padStart(2, '0')}</span></div><h3>${name}</h3><p>${description}</p><a class="online-link" href="https://itch.io/search?q=${encodeURIComponent(name)}" target="_blank" rel="noopener">Find online <span>↗</span></a>`;
+    card.innerHTML = `<div class="card-top"><span class="icon online-icon">↗</span><span class="game-number">${String(index + 6).padStart(2, '0')}</span></div><h3>${name}</h3><p>${description}</p><a class="online-link" href="${gameLinks[name]}" target="_blank" rel="noopener noreferrer">Spil nu <span>↗</span></a>`;
     gamesContainer.append(card);
   });
 }
