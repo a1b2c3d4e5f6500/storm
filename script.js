@@ -24,11 +24,9 @@ function startGame(name) {
   currentGame = name;
   title.textContent = name;
   modal.hidden = false;
-  if (isPhone()) {
-    modal.classList.add('is-fullscreen');
-    document.body.classList.add('game-is-fullscreen');
-    enterFullscreen();
-  }
+  modal.classList.add('is-fullscreen');
+  document.body.classList.add('game-is-fullscreen');
+  enterFullscreen();
   cancelLoops();
   if (name === 'Snake') setupSnake();
   if (name === 'Block Runner') setupRunner();
@@ -49,7 +47,6 @@ function updateDeviceLayout() {
 }
 function isPhone() { return getDeviceType() === 'phone'; }
 function enterFullscreen() {
-  if (!isPhone()) return;
   const target = document.documentElement;
   const request = target.requestFullscreen || target.webkitRequestFullscreen;
   if (request) Promise.resolve(request.call(target)).catch(() => {});
