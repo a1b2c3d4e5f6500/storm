@@ -20,7 +20,9 @@ function startGame(name) {
   currentGame = name;
   title.textContent = name;
   modal.hidden = false;
-  document.documentElement.requestFullscreen?.().catch(() => {});
+  modal.classList.add('is-fullscreen');
+  document.body.classList.add('game-is-fullscreen');
+  modal.requestFullscreen?.().catch(() => {});
   cancelLoops();
   if (name === 'Snake') setupSnake();
   if (name === 'Block Runner') setupRunner();
@@ -29,7 +31,7 @@ function startGame(name) {
   if (name === 'Orbit Catch') setupOrbit();
 }
 function restartGame() { startGame(currentGame); }
-function closeGame() { cancelLoops(); modal.hidden = true; if (document.fullscreenElement) document.exitFullscreen?.(); }
+function closeGame() { cancelLoops(); modal.hidden = true; modal.classList.remove('is-fullscreen'); document.body.classList.remove('game-is-fullscreen'); if (document.fullscreenElement) document.exitFullscreen?.(); }
 function cancelLoops() { cancelAnimationFrame(animationId); clearInterval(timerId); keys.clear(); }
 function finishGame(points, message) {
   cancelLoops();
