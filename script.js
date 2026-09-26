@@ -4,6 +4,7 @@ const modal = document.getElementById('game-modal');
 const title = document.getElementById('game-title');
 const instructions = document.getElementById('game-instructions');
 const scoreElement = document.getElementById('score');
+const deviceStatus = document.getElementById('device-status');
 const keys = new Set();
 let currentGame = '';
 let animationId;
@@ -12,6 +13,9 @@ let gameState;
 
 const savedScore = Number(localStorage.getItem('stormHighscore') || 0);
 scoreElement.textContent = savedScore ? `Din highscore: ${savedScore}` : 'Ingen score endnu';
+updateDeviceLayout();
+window.addEventListener('resize', updateDeviceLayout);
+window.addEventListener('orientationchange', updateDeviceLayout);
 document.addEventListener('keydown', (event) => { keys.add(event.key.toLowerCase()); if (event.key === 'Escape') closeGame(); });
 document.addEventListener('keyup', (event) => keys.delete(event.key.toLowerCase()));
 canvas.addEventListener('click', handleCanvasClick);
@@ -33,7 +37,17 @@ function startGame(name) {
   if (name === 'Orbit Catch') setupOrbit();
 }
 function restartGame() { startGame(currentGame); }
-function isPhone() { return window.matchMedia('(max-width: 600px)').matches || navigator.maxTouchPoints > 0; }
+function getDeviceType() {
+  if (window.matchMedia('(max-width: 600px)').matches) return 'phone';
+  if (window.matchMedia('(max-width: 1024px)').matches) return 'tablet';
+  return 'desktop';
+}
+function updateDeviceLayout() {
+  const device = getDeviceType();
+  document.body.dataset.device = device;
+  if (deviceStatus) deviceStatus.innerHTML = `<span class="status-dot"></span> ${device === 'phone' ? 'MOBIL' : device === 'tablet' ? 'TABLET' : 'DESKTOP'}`;
+}
+function isPhone() { return getDeviceType() === 'phone'; }
 function enterFullscreen() {
   if (!isPhone()) return;
   const target = document.documentElement;
