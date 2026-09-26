@@ -39,12 +39,12 @@ const gameLinks = {
 };
 
 Object.assign(gameLinks, {
-  'Action Turnip': 'https://www.crazygames.com/game/action-turnip',
-  'Action Games Hub': 'https://www.crazygames.com/action',
-  'Puzzle Games Hub': 'https://www.crazygames.com/puzzle',
-  'Racing Games Hub': 'https://www.crazygames.com/racing',
-  'Strategy Games Hub': 'https://www.crazygames.com/strategy',
-  'Adventure Games Hub': 'https://www.crazygames.com/adventure'
+  'Action Turnip': 'https://www.y8.com/games/action_turnip',
+  'Action Games Hub': 'https://www.y8.com/categories/action',
+  'Puzzle Games Hub': 'https://www.y8.com/categories/puzzle',
+  'Racing Games Hub': 'https://www.y8.com/categories/racing',
+  'Strategy Games Hub': 'https://www.y8.com/categories/strategy',
+  'Adventure Games Hub': 'https://www.y8.com/categories/adventure'
 });
 
 const moreOnlineGames = [
@@ -58,7 +58,7 @@ const moreOnlineGames = [
   ['Idle Breakout', 'idle-breakout', 'casual'], ['Idle Mining Empire', 'idle-mining-empire', 'casual'], ['Idle Lumber Run', 'idle-lumber-run', 'casual'], ['Merge Cakes', 'merge-cakes', 'casual'], ['Gold Digger FRVR', 'gold-digger-frvr', 'casual'], ['Farm Land', 'farm-land', 'casual'], ['Big Farm', 'big-farm', 'casual'], ['Fish Eat Fish', 'fish-eat-fish', 'casual'], ['Duck Life', 'duck-life', 'sports'], ['Duck Life 4', 'duck-life-4', 'sports'],
   ['Chess Challenges', 'chess-challenges', 'strategy'], ['Master Chess', 'master-chess', 'strategy'], ['Checkers Legend', 'checkers-legend', 'strategy'], ['Fireboy Watergirl Online', 'fireboy-watergirl-online', 'strategy'], ['Stickman War', 'stickman-war', 'strategy'], ['Battle Wheels', 'battle-wheels', 'strategy'], ['Plants vs Zombies', 'plants-vs-zombies', 'strategy'], ['Kingdom Rush', 'kingdom-rush', 'strategy'], ['Ninja Clash', 'ninja-clash', 'strategy'], ['Bad Ice Cream', 'bad-ice-cream', 'puzzle'],
   ['Bad Ice Cream 2', 'bad-ice-cream-2', 'puzzle'], ['Bad Ice Cream 3', 'bad-ice-cream-3', 'puzzle'], ['Worlds Hardest Game 2', 'worlds-hardest-game-2', 'puzzle'], ['Bloxorz', 'bloxorz', 'puzzle'], ['Cut the Rope Experiments', 'cut-the-rope-experiments', 'puzzle'], ['Snail Bob 8', 'snail-bob-8', 'adventure'], ['Red and Blue Stickman', 'red-and-blue-stickman', 'adventure'], ['Two Cat', 'two-cat', 'adventure'], ['Duo Vikings', 'duo-vikings', 'adventure'], ['Viking Pub', 'viking-pub', 'adventure']
-].map(([name, slug, category]) => [name, `Spil ${name} direkte på CrazyGames.`, category, `https://www.crazygames.com/game/${slug}`]);
+].map(([name, slug, category]) => [name, `Find ${name} på Armor Games.`, category, `https://armorgames.com/search?q=${encodeURIComponent(name)}`]);
 onlineGames.push(...moreOnlineGames);
 populateOnlineGames();
 gameSearch.addEventListener('input', filterGames);
@@ -68,7 +68,8 @@ function populateOnlineGames() {
     const card = document.createElement('article');
     card.className = 'card online-card';
     card.dataset.search = `${name} ${description} ${category}`.toLowerCase();
-    card.innerHTML = `<div class="card-top"><span class="icon online-icon">↗</span><span class="game-number">${String(index + 6).padStart(3, '0')}</span></div><h3>${name}</h3><p>${description}</p><a class="online-link" href="${directUrl || gameLinks[name]}" target="_blank" rel="noopener noreferrer">Spil nu <span>↗</span></a>`;
+    const workingSearchUrl = `https://armorgames.com/search?q=${encodeURIComponent(name)}`;
+    card.innerHTML = `<div class="card-top"><span class="icon online-icon">↗</span><span class="game-number">${String(index + 6).padStart(3, '0')}</span></div><h3>${name}</h3><p>${description}</p><a class="online-link" href="${workingSearchUrl}" target="_blank" rel="noopener noreferrer">Find spillet <span>↗</span></a>`;
     gamesContainer.append(card);
   });
 }
