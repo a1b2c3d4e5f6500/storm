@@ -5,6 +5,8 @@ const title = document.getElementById('game-title');
 const instructions = document.getElementById('game-instructions');
 const scoreElement = document.getElementById('score');
 const deviceStatus = document.getElementById('device-status');
+const gamesContainer = document.querySelector('.games');
+const gameSearch = document.getElementById('game-search');
 const keys = new Set();
 let currentGame = '';
 let animationId;
@@ -19,6 +21,39 @@ window.addEventListener('orientationchange', updateDeviceLayout);
 document.addEventListener('keydown', (event) => { keys.add(event.key.toLowerCase()); if (event.key === 'Escape') closeGame(); });
 document.addEventListener('keyup', (event) => keys.delete(event.key.toLowerCase()));
 canvas.addEventListener('click', handleCanvasClick);
+
+const onlineGames = [
+  ['2048', 'Saml talbrikkerne og nå 2048.', 'puzzle'], ['Tetris', 'Byg rækker og ryd banen.', 'arcade'], ['Minesweeper', 'Find minerne uden at eksplodere.', 'puzzle'], ['Solitaire', 'Klassisk kortspil til en rolig runde.', 'cards'], ['Chess', 'Spil skak mod en modstander online.', 'strategy'],
+  ['Checkers', 'Flyt brikkerne og slå modstanderen.', 'strategy'], ['Sudoku', 'Fyld alle felter med de rigtige tal.', 'puzzle'], ['Mahjong', 'Find matchende brikker og ryd bordet.', 'puzzle'], ['Flappy Bird', 'Fly gennem rørene uden at ramme.', 'arcade'], ['Doodle Jump', 'Hop højere og højere uden at falde.', 'arcade'],
+  ['Pac-Man', 'Spis prikker og undgå spøgelserne.', 'arcade'], ['Asteroids', 'Skyd asteroider og overlev i rummet.', 'arcade'], ['Pong', 'Slå bolden tilbage og vind duellen.', 'sports'], ['Breakout', 'Smadr alle blokkene med bolden.', 'arcade'], ['Frogger', 'Kryds vejen og floden sikkert.', 'arcade'],
+  ['Space Invaders', 'Forsvar jorden mod invasionen.', 'arcade'], ['Sonic Runner', 'Løb hurtigt og saml bonusser.', 'action'], ['Endless Runner', 'Løb så langt som muligt.', 'action'], ['Tower Defense', 'Forsvar basen mod bølger af fjender.', 'strategy'], ['Bloons', 'Spræng balloner med præcise skud.', 'strategy'],
+  ['Cut the Rope', 'Klip rebene og giv monsteret slik.', 'puzzle'], ['Fireboy and Watergirl', 'Samarbejd gennem tempelbanerne.', 'adventure'], ['Action Turnip', 'Kæmp dig gennem farlige baner.', 'action'], ['Little Alchemy', 'Bland elementer og opdag nye ting.', 'puzzle'], ['Cookie Clicker', 'Klik, bag og byg et cookie-imperium.', 'casual'],
+  ['A Dark Room', 'Byg en verden fra næsten ingenting.', 'adventure'], ['Hextris', 'Match farver i en roterende arena.', 'arcade'], ['Krunker', 'Hurtigt multiplayer-skydespil i browseren.', 'action'], ['Shell Shockers', 'Kæmp som et æg i arenaen.', 'action'], ['Surviv.io', 'Overlev mod andre i en battle royale.', 'action'],
+  ['Slither.io', 'Bliv større og undgå de andre slanger.', 'action'], ['Agar.io', 'Spis mindre celler og voks dig stor.', 'action'], ['Paper.io', 'Udvid dit område uden at blive fanget.', 'strategy'], ['Hole.io', 'Slug byen og voks hurtigst muligt.', 'action'], ['Drift Hunters', 'Drift gennem baner og forbedr bilen.', 'racing'],
+  ['Moto X3M', 'Kør motorcykel gennem vilde baner.', 'racing'], ['Fireboy and Watergirl 2', 'Løs nye samarbejdsbaner sammen.', 'adventure'], ['Worlds Hardest Game', 'Prøv at klare ekstremt svære baner.', 'arcade'], ['Geometry Dash', 'Hop i takt og undgå forhindringer.', 'arcade'], ['Vex 6', 'Løb gennem præcise platformbaner.', 'action'],
+  ['Action Games Hub', 'Find flere gratis action-spil online.', 'action'], ['Puzzle Games Hub', 'Find flere gratis puzzle-spil online.', 'puzzle'], ['Racing Games Hub', 'Find flere gratis racerspil online.', 'racing'], ['Strategy Games Hub', 'Find flere gratis strategispil online.', 'strategy'], ['Adventure Games Hub', 'Find flere gratis eventyrspil online.', 'adventure']
+];
+
+populateOnlineGames();
+gameSearch.addEventListener('input', filterGames);
+
+function populateOnlineGames() {
+  onlineGames.forEach(([name, description, category], index) => {
+    const card = document.createElement('article');
+    card.className = 'card online-card';
+    card.dataset.search = `${name} ${description} ${category}`.toLowerCase();
+    card.innerHTML = `<div class="card-top"><span class="icon online-icon">↗</span><span class="game-number">${String(index + 6).padStart(2, '0')}</span></div><h3>${name}</h3><p>${description}</p><a class="online-link" href="https://itch.io/search?q=${encodeURIComponent(name)}" target="_blank" rel="noopener">Find online <span>↗</span></a>`;
+    gamesContainer.append(card);
+  });
+}
+
+function filterGames() {
+  const searchTerm = gameSearch.value.trim().toLowerCase();
+  document.querySelectorAll('.games .card').forEach((card) => {
+    const searchableText = `${card.dataset.search || ''} ${card.innerText}`.toLowerCase();
+    card.hidden = searchTerm && !searchableText.includes(searchTerm);
+  });
+}
 
 function startGame(name) {
   currentGame = name;
