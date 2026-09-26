@@ -20,6 +20,7 @@ function startGame(name) {
   currentGame = name;
   title.textContent = name;
   modal.hidden = false;
+  document.documentElement.requestFullscreen?.().catch(() => {});
   cancelLoops();
   if (name === 'Snake') setupSnake();
   if (name === 'Block Runner') setupRunner();
@@ -28,13 +29,14 @@ function startGame(name) {
   if (name === 'Orbit Catch') setupOrbit();
 }
 function restartGame() { startGame(currentGame); }
-function closeGame() { cancelLoops(); modal.hidden = true; }
+function closeGame() { cancelLoops(); modal.hidden = true; if (document.fullscreenElement) document.exitFullscreen?.(); }
 function cancelLoops() { cancelAnimationFrame(animationId); clearInterval(timerId); keys.clear(); }
 function finishGame(points, message) {
   cancelLoops();
   const oldScore = Number(localStorage.getItem('stormHighscore') || 0);
-  if (points > oldScore) { localStorage.setItem('stormHighscore', points); scoreElement.textContent = `Ny highscore: ${points}!`; instructions.textContent = `${message} Ny highscore! Tryk Start forfra for en ny runde.`; }
-  else { scoreElement.textContent = `${currentGame}: ${points} point. Highscore: ${oldScore}`; instructions.textContent = `${message} Tryk Start forfra for at prøve igen.`; }
+  if (points > oldScore) { localStorage.setItem('stormHighscore', points); scoreElement.textContent = `Ny highscore: ${points}!`; }
+  else { scoreElement.textContent = `${currentGame}: ${points} point. Highscore: ${oldScore}`; }
+  closeGame();
 }
 function clearCanvas() { context.fillStyle = '#101820'; context.fillRect(0, 0, canvas.width, canvas.height); }
 function drawText(value, x, y, size = 16, color = '#f2efe8') { context.fillStyle = color; context.font = `${size}px Arial`; context.fillText(value, x, y); }
