@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="da">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="En rolig 15-minutters videosession.">
+  <title># Chiikawa Film | 15 minutter</title>
+  <link rel="stylesheet" href="chiikawa.css">
+</head>
+<body>
+  <main class="cinema-shell">
+    <header class="topbar">
+      <a class="brand" href="chiikawa.html"># CHIIKAWA</a>
+      <span class="session-label">15 MIN SESSION</span>
+    </header>
+
+    <section class="intro" aria-labelledby="page-title">
+      <p class="eyebrow">EN LILLE FILMPAUSE</p>
+      <h1 id="page-title"># Chiikawa<br><em>film</em></h1>
+      <p class="lead">Læn dig tilbage. Videoen starter automatisk uden lyd, fordi moderne browsere blokerer automatisk lyd.</p>
+    </section>
+
+    <section class="player-wrap" aria-label="Videoplayer">
+      <div class="screen-frame">
+        <iframe id="youtube-player" title="Chiikawa-video med engelske undertekster" src="https://www.youtube.com/embed/CRtdFfhZHnM?autoplay=1&mute=1&controls=1&rel=0&enablejsapi=1" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <div class="player-meta">
+        <div><span class="meta-label">SESSION</span><strong id="timer">15:00</strong></div>
+        <div class="progress-track" aria-hidden="true"><span id="progress"></span></div>
+        <div><span id="status" class="status-dot"></span><span id="status-text">Starter muted</span></div>
+      </div>
+      <button id="sound-button" class="sound-button" type="button">Start lyd</button>
+      <a class="youtube-direct" href="https://www.youtube.com/watch?v=CRtdFfhZHnM" target="_blank" rel="noopener noreferrer">Åbn videoen direkte på YouTube ↗</a>
+    </section>
+
+    <footer>Afspil kun indhold, du selv har rettigheder til eller har fået fra en officiel kilde.</footer>
+  </main>
+  <script src="chiikawa.js"></script>
+  <script src="https://www.youtube.com/iframe_api"></script>
+</body>
+</html>
